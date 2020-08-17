@@ -12,8 +12,10 @@ public class ItemManager : MonoBehaviour
     //ゲームオブジェクト
     public GameObject CanvasUI;
     public GameObject KeyImage;
+    public GameObject DoorImage;
     public GameObject NoteImage;
     public GameObject CageImage;
+    public GameObject BackButton;
     public GameObject ItemImage1;
     public Image ItemImg1;
     public Sprite ItemImgSprite1;
@@ -26,7 +28,6 @@ public class ItemManager : MonoBehaviour
     {
         if(keyflg == 0){
             Debug.Log("籠をクリック");
-            CanvasUI.SetActive(false);
             CageImage.SetActive(false);
             KeyImage.SetActive(true);
 
@@ -60,7 +61,6 @@ public class ItemManager : MonoBehaviour
     public void OnKeyImage()
     {
         Debug.Log("鍵を入手");
-        CanvasUI.SetActive(true);
         KeyImage.SetActive(false);
     }
 
@@ -72,14 +72,12 @@ public class ItemManager : MonoBehaviour
         } else if(keyflg == 2)
         {
             Debug.Log("鍵があいた！");
-            CanvasUI.SetActive(false);
             NoteImage.SetActive(true);
             keyflg = 4;
             ItemImg1.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         }else if(keyflg == 4)
         {
             Debug.Log("ノート再確認");
-            CanvasUI.SetActive(false);
             NoteImage.SetActive(true);
 
         }
@@ -88,8 +86,17 @@ public class ItemManager : MonoBehaviour
     public void onNoteImage()
     {
         Debug.Log("ノートを発見");
-        CanvasUI.SetActive(true);
         NoteImage.SetActive(false);
     }
+
+    //BackButtonアクション
+    public void onBackButton()
+    {
+        Debug.Log("BackButton");
+        KeyImage.SetActive(false);
+        DoorImage.SetActive(false);
+        NoteImage.SetActive(false);
+    }
+
 
 }
