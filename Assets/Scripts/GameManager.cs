@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool firstPush = false;
+    //スタートボタンを押したら呼ばれる
+    public void PressStart()
     {
-        
-    }
+        Debug.Log("Press Start!");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(!firstPush)
+        {
+            Debug.Log("Go Next Scene!");
+            FadeManager.FadeOut(1);
+            //次のシーンへ行く
+            // SceneManager.LoadScene("MainScese");
+            //
+            firstPush = true;
+        }
+
     }
 }
