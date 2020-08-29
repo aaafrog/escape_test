@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PasswordManager : MonoBehaviour
 {
@@ -34,6 +35,10 @@ public class PasswordManager : MonoBehaviour
     private string enteredPassWordNo = "";
 
 
+    public GameObject DoorImage;
+
+
+
     /******************************************** 
     *          パスワードの処理
     ********************************************/
@@ -50,6 +55,15 @@ public class PasswordManager : MonoBehaviour
     {
         
     }
+
+
+
+    public void onDoorImage()
+    {
+        Debug.Log("ドアをクリック");
+        DoorImage.SetActive(true);
+    }
+
 
 
     public void OnPassWordButton(int getSselected)
@@ -97,6 +111,7 @@ public class PasswordManager : MonoBehaviour
 
                 if (enteredPassWordNo == "1234")
                 {
+                    FadeManager.FadeOut(2);
                     Debug.Log("clear");
                 }
 
