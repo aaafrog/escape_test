@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,93 +10,86 @@ public class ItemManager : MonoBehaviour
     /******************************************** 
     *          アイテムボックスの処理
     ********************************************/
-    //ゲームオブジェクト
-    public GameObject CanvasUI;
-    public GameObject KeyImage;
-    public GameObject DoorImage;
-    public GameObject NoteImage;
+    //ゲームオブジェクト 
     public GameObject CageImage;
-    public GameObject BackButton;
-    public GameObject ItemImage1;
-    public Image ItemImg1;
-    public Sprite ItemImgSprite1;
+    public GameObject KeyImage;
+    public GameObject NoteImage;
+    public GameObject DoorImage;
+    public GameObject[] ItemImages;
 
-    //鍵フラグ
-    int keyflg = 0;
-
-    //籠アクション
-    public void onCageImage()
+    //アイテムリスト
+    public enum Item
     {
-        if(keyflg == 0){
-            Debug.Log("籠をクリック");
-            CageImage.SetActive(false);
-            KeyImage.SetActive(true);
+        key1,
+        Key2,
+        Key3,
+        Key4,
+    }
 
-            //鍵をアイテムボックスへ収納 
-            ItemImg1.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            ItemImg1.sprite = ItemImgSprite1;
-            keyflg = 1;
+    public Item item;
+
+    void KeyImageAction(bool isShow)
+    {
+        KeyImage.SetActive(isShow);
+    }
+    void CageImageAction(bool isShow)
+    {
+        CageImage.SetActive(isShow);
+    }
+    void DoorImageAction(bool isShow)
+    {
+        DoorImage.SetActive(isShow);
+    }
+    void NoteImageAction(bool isShow)
+    {
+        NoteImage.SetActive(isShow);
+    }
+
+    //アイテム取得
+    public void onGetItem()
+    {
+        Debug.Log(item + "を取得");
+
+        //itemを値で取得
+        int index = (int)item;
+        ItemImages[index].SetActive(true);
+
+        if (index == 0)
+        {
+            KeyImageAction(true);
+            CageImageAction(false);
         }
     }
 
-    //アイテムボックスアクション
-    public void OnItemImage1()
+    //アイテム使用
+    int keyFlg = 0;
+    public void onUseItem()
     {
-        if (keyflg == 0)
+        if (ItemImages[0].activeSelf == true)
         {
-
-        }else if (keyflg == 1)
-        {
-            keyflg = 2;
-            ItemImg1.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-            Debug.Log("鍵を選択 cageflg:" + keyflg);
+            Debug.Log("鍵があいた");
+            NoteImageAction(true);
+            ItemImages[0].SetActive(false);
+            keyFlg = 1;
+            Debug.Log(keyFlg);
         }
-        else if (keyflg == 2)
+        else if (keyFlg == 1)
         {
-            keyflg = 1;
-            ItemImg1.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            Debug.Log("鍵を選択解除 cageflg:" + keyflg);
+            NoteImageAction(true);
         }
-    }
-
-    public void OnKeyImage()
-    {
-        Debug.Log("鍵を入手");
-        KeyImage.SetActive(false);
-    }
-
-    //引き出しアクション
-    public void onDrawerImage()
-    {
-        if(keyflg == 0 || keyflg == 1) {
-            Debug.Log("鍵がかかっている！");
-        } else if(keyflg == 2)
+        else
         {
-            Debug.Log("鍵があいた！");
-            NoteImage.SetActive(true);
-            keyflg = 4;
-            ItemImg1.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-        }else if(keyflg == 4)
-        {
-            Debug.Log("ノート再確認");
-            NoteImage.SetActive(true);
-
+            Debug.Log("鍵がかかっている");
         }
-    }
-
-    public void onNoteImage()
-    {
-        Debug.Log("ノートを発見");
-        NoteImage.SetActive(false);
     }
 
     //BackButtonアクション
     public void onBackButton()
     {
         Debug.Log("BackButton");
-        KeyImage.SetActive(false);
-        DoorImage.SetActive(false);
-        NoteImage.SetActive(false);
+        KeyImageAction(false);
+        DoorImageAction(false);
+        NoteImageAction(false);
     }
 
 
